@@ -1,44 +1,98 @@
-import { Resend } from 'resend';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIRU - Legal Intake Readiness Utility | SMRG Consulting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .bg-smrg-navy { background-color: #0A192F; }
+        .text-smrg-navy { color: #0A192F; }
+        .text-smrg-gold { color: #C5A059; }
+        .border-smrg-gold { border-color: #C5A059; }
+        .btn-gold { 
+            background-color: #C5A059; 
+            color: #0A192F; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 6px -1px rgba(197, 160, 89, 0.2);
+        }
+        .btn-gold:hover { 
+            background-color: #AD8B45; 
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(197, 160, 89, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
 
-// Vercel handles the API Key from your Environment Variables
-const resend = new Resend(process.env.RESEND_API_KEY);
+    <nav class="py-6 px-8 flex justify-between items-center bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="text-2xl font-bold tracking-tighter text-smrg-navy">SMRG<span class="text-smrg-gold">CONSULTING</span></div>
+        <a href="#pilot" class="btn-gold px-6 py-2 rounded-sm font-semibold text-sm uppercase tracking-widest">Start Pilot</a>
+    </nav>
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  // Extract all fields from the new qualification form
-  const { name, email, website, phone } = req.body;
-
-  if (!email || !name || !website) {
-    return res.status(400).json({ error: 'Missing required qualification fields.' });
-  }
-
-  try {
-    const data = await resend.emails.send({
-      // Keep 'onboarding@resend.dev' until you verify smrgconsulting.com in Resend
-      from: 'LIRU Intake <onboarding@resend.dev>', 
-      to: 'support@smrgconsulting.com', // CORRECTED RECIPIENT EMAIL
-      reply_to: email, 
-      subject: `🔥 New LIRU Pilot Request: ${name}`,
-      html: `
-        <div style="font-family: sans-serif; line-height: 1.6; color: #0A192F; border: 1px solid #eee; padding: 20px; border-radius: 8px;">
-          <h2 style="color: #C5A059; margin-bottom: 20px;">Qualified Pilot Request</h2>
-          <p><strong>Contact Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Firm Website:</strong> <a href="${website}" target="_blank">${website}</a></p>
-          <p><strong>Phone Number:</strong> ${phone}</p>
-          <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;" />
-          <p style="font-size: 12px; color: #64748b;">This lead was captured via liru.smrgconsulting.com</p>
+    <section id="pilot" class="py-24 px-6 text-center bg-white border-t border-slate-200">
+        <div class="max-w-3xl mx-auto border-2 border-slate-200 p-12 rounded-lg bg-slate-50/50">
+            <h2 class="text-3xl mb-6 text-smrg-navy font-serif italic font-bold">Start a 10-Lead Pilot</h2>
+            <p class="text-slate-600 mb-10 text-lg">Run Liru on your next 10 leads. If the output isn't more structured than your current process, don't continue.</p>
+            
+            <form id="pilot-form" class="flex flex-col gap-4 max-w-md mx-auto">
+                <input type="text" id="lead-name" placeholder="Full Name / Firm Admin" required class="p-4 rounded-sm border border-slate-300 outline-none focus:ring-2 focus:ring-smrg-gold">
+                <input type="email" id="lead-email" placeholder="Firm Email Address" required class="p-4 rounded-sm border border-slate-300 outline-none focus:ring-2 focus:ring-smrg-gold">
+                <div class="text-left">
+                    <label class="text-[10px] text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Firm Website (Must start with https://)</label>
+                    <input type="url" id="lead-website" placeholder="https://smrgconsulting.com" required class="w-full p-4 rounded-sm border border-slate-300 outline-none focus:ring-2 focus:ring-smrg-gold">
+                </div>
+                <input type="tel" id="lead-phone" placeholder="Contact Phone Number" required class="p-4 rounded-sm border border-slate-300 outline-none focus:ring-2 focus:ring-smrg-gold">
+                <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest mt-2">Request Pilot Access</button>
+            </form>
+            <p id="response-msg" class="mt-4 font-bold hidden"></p>
         </div>
-      `
-    });
+    </section>
 
-    return res.status(200).json({ success: true, id: data.id });
-    
-  } catch (error) {
-    console.error("Resend API Error:", error);
-    return res.status(500).json({ error: 'Internal Server Error', message: error.message });
-  }
-}
+    <script>
+        // Auto-fix URL format
+        document.getElementById('lead-website').addEventListener('blur', function(e) {
+            let url = e.target.value.trim();
+            if (url && !/^https?:\/\//i.test(url)) {
+                e.target.value = 'https://' + url;
+            }
+        });
+
+        document.getElementById('pilot-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('lead-name').value,
+                email: document.getElementById('lead-email').value,
+                website: document.getElementById('lead-website').value,
+                phone: document.getElementById('lead-phone').value
+            };
+
+            const btn = document.getElementById('submit-btn');
+            const msg = document.getElementById('response-msg');
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
+
+            try {
+                const response = await fetch('/api/send-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    msg.innerText = "Application Received. We will verify your firm's website and contact you shortly.";
+                    msg.className = "mt-4 font-bold text-green-600";
+                    msg.classList.remove('hidden');
+                    btn.innerText = "REQUEST SENT";
+                } else { throw new Error(); }
+            } catch (error) {
+                msg.innerText = "System Error. Please email support@smrgconsulting.com"; // CORRECTED ERROR EMAIL
+                msg.className = "mt-4 font-bold text-red-600";
+                msg.classList.remove('hidden');
+                btn.disabled = false; btn.innerText = "TRY AGAIN";
+            }
+        });
+    </script>
+</body>
+</html>
