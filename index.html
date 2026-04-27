@@ -54,7 +54,7 @@
                     <label class="text-[10px] text-slate-400 uppercase tracking-widest block mb-1">Firm Website (Must start with https://)</label>
                     <input type="url" id="lead-website" placeholder="https://smrgconsulting.com" required class="w-full p-4 rounded-sm border border-slate-300 outline-none">
                 </div>
-                <input type="tel" id="lead-phone" placeholder="Phone Number" required class="p-4 rounded-sm border border-slate-300 outline-none">
+                <input type="tel" id="lead-phone" placeholder="Phone Number" class="p-4 rounded-sm border border-slate-300 outline-none">
                 <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest">Request Pilot Access</button>
             </form>
             <p id="response-msg" class="mt-4 font-bold hidden"></p>
@@ -78,24 +78,36 @@
             };
             const btn = document.getElementById('submit-btn');
             const msg = document.getElementById('response-msg');
-            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            btn.disabled = true;
+            btn.innerText = 'PROCESSING...';
+            msg.classList.add('hidden');
+
             try {
                 const response = await fetch('/api/send-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
+
+                const result = await response.json();
+
                 if (response.ok) {
-                    msg.innerText = "Application Received.";
+                    msg.innerText = "Application Received. We'll be in touch shortly.";
                     msg.className = "mt-4 font-bold text-green-600";
                     msg.classList.remove('hidden');
                     btn.innerText = "REQUEST SENT";
-                } else { throw new Error(); }
+                    document.getElementById('pilot-form').reset();
+                } else {
+                    // Show the actual error from the server to help debug
+                    throw new Error(result.detail || result.error || 'Unknown server error');
+                }
             } catch (error) {
-                msg.innerText = "System Error. Email support@smrgconsulting.com";
+                console.error('Submission error:', error);
+                msg.innerText = `Error: ${error.message}. Email support@smrgconsulting.com`;
                 msg.className = "mt-4 font-bold text-red-600";
                 msg.classList.remove('hidden');
-                btn.disabled = false; btn.innerText = "TRY AGAIN";
+                btn.disabled = false;
+                btn.innerText = "TRY AGAIN";
             }
         });
     </script>
