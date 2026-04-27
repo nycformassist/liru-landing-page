@@ -66,12 +66,12 @@
         <div class="max-w-4xl mx-auto proof-container border-t-8 border-smrg-gold">
             <div class="p-6 bg-white border-b border-slate-100 flex justify-between items-center text-xs font-bold uppercase tracking-widest text-slate-500">
                 <span>System Output: Case Readiness Report</span>
-                <span class="bg-green-100 text-green-700 px-2 py-1 rounded">Ready for Review</span>
+                <span class="bg-green-100 text-green-700 px-2 py-1 rounded font-bold uppercase tracking-widest">Ready for Review</span>
             </div>
             <div class="dashboard-container p-4 md:p-6 text-center">
                 <img src="dashboard-preview.png" alt="LIRU Dashboard" class="w-full h-auto rounded border border-slate-700 shadow-2xl inline-block">
             </div>
-            <div class="p-6 bg-slate-50 text-center border-t border-slate-200 italic text-sm text-slate-500">
+            <div class="p-6 bg-slate-50 text-center border-t border-slate-200 italic text-sm text-slate-500 font-mono underline decoration-smrg-gold decoration-2">
                 "This is exactly what your next lead will look like."
             </div>
         </div>
@@ -95,9 +95,7 @@
     <section id="pilot" class="py-24 px-6 text-center bg-white border-t border-slate-200">
         <div class="max-w-3xl mx-auto border-2 border-slate-200 p-12 rounded-lg bg-slate-50/50">
             <h2 class="text-3xl mb-6 text-smrg-navy font-serif italic font-bold">Start a 10-Lead Pilot</h2>
-            <p class="text-slate-600 mb-10 text-lg leading-relaxed">
-                Run Liru on your next 10 leads. If the output isn’t more structured than your current process, don’t continue.
-            </p>
+            <p class="text-slate-600 mb-10 text-lg leading-relaxed">Run Liru on your next 10 leads. If the output isn't more structured than your current process, don't continue.</p>
             
             <form id="pilot-form" class="flex flex-col gap-4 max-w-md mx-auto">
                 <input type="text" id="lead-name" placeholder="Full Name / Firm Admin" required
@@ -106,8 +104,11 @@
                 <input type="email" id="lead-email" placeholder="Firm Email Address" required
                     class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
                 
-                <input type="url" id="lead-website" placeholder="Law Firm Website (https://...)" required
-                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+                <div class="text-left">
+                    <label for="lead-website" class="text-[10px] text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Firm Website (Must start with https://)</label>
+                    <input type="url" id="lead-website" placeholder="https://smrgconsulting.com" required
+                        class="w-full p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+                </div>
 
                 <input type="tel" id="lead-phone" placeholder="Contact Phone Number" required
                     class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
@@ -122,7 +123,7 @@
 
     <footer class="py-24 bg-smrg-navy text-white text-center">
         <div class="max-w-2xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl mb-8 leading-tight font-serif italic">Stop reviewing incomplete notes. Start reviewing structured cases.</h2>
+            <h2 class="text-3xl md:text-5xl mb-8 leading-tight font-serif italic text-white">Stop reviewing incomplete notes. Start reviewing structured cases.</h2>
             <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
                 <a href="#pilot" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl w-full md:w-auto uppercase tracking-widest">Book a 10-Minute Demo</a>
                 <a href="#pilot" class="text-smrg-gold underline tracking-widest uppercase text-sm font-bold hover:text-white transition">Get a Sample Report</a>
@@ -132,10 +133,16 @@
     </footer>
 
     <script>
+        // Auto-fix URL format if user forgets https://
+        document.getElementById('lead-website').addEventListener('blur', function(e) {
+            let url = e.target.value.trim();
+            if (url && !/^https?:\/\//i.test(url)) {
+                e.target.value = 'https://' + url;
+            }
+        });
+
         document.getElementById('pilot-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // CAPTURING ALL QUALIFICATION FIELDS
             const formData = {
                 name: document.getElementById('lead-name').value,
                 email: document.getElementById('lead-email').value,
@@ -145,9 +152,7 @@
 
             const btn = document.getElementById('submit-btn');
             const msg = document.getElementById('response-msg');
-
-            btn.disabled = true;
-            btn.innerText = 'PROCESSING...';
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
 
             try {
                 const response = await fetch('/api/send-lead', {
@@ -155,21 +160,17 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 });
-
                 if (response.ok) {
                     msg.innerText = "Application Received. We will verify your firm's website and contact you shortly.";
                     msg.className = "mt-4 font-bold text-green-600";
                     msg.classList.remove('hidden');
                     btn.innerText = "REQUEST SENT";
-                } else {
-                    throw new Error();
-                }
+                } else { throw new Error(); }
             } catch (error) {
                 msg.innerText = "System Error. Please email info@smrgconsulting.com";
                 msg.className = "mt-4 font-bold text-red-600";
                 msg.classList.remove('hidden');
-                btn.disabled = false;
-                btn.innerText = "TRY AGAIN";
+                btn.disabled = false; btn.innerText = "TRY AGAIN";
             }
         });
     </script>
