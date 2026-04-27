@@ -100,10 +100,20 @@
             </p>
             
             <form id="pilot-form" class="flex flex-col gap-4 max-w-md mx-auto">
-                <input type="email" id="lead-email" placeholder="Enter Firm Email" required
+                <input type="text" id="lead-name" placeholder="Full Name / Firm Admin" required
                     class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
-                <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest">
-                    Start Pilot This Week
+                
+                <input type="email" id="lead-email" placeholder="Firm Email Address" required
+                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+                
+                <input type="url" id="lead-website" placeholder="Law Firm Website (https://...)" required
+                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+
+                <input type="tel" id="lead-phone" placeholder="Contact Phone Number" required
+                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+
+                <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest mt-2">
+                    Request Pilot Access
                 </button>
             </form>
             <p id="response-msg" class="mt-4 font-bold hidden"></p>
@@ -124,7 +134,15 @@
     <script>
         document.getElementById('pilot-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('lead-email').value;
+            
+            // CAPTURING ALL QUALIFICATION FIELDS
+            const formData = {
+                name: document.getElementById('lead-name').value,
+                email: document.getElementById('lead-email').value,
+                website: document.getElementById('lead-website').value,
+                phone: document.getElementById('lead-phone').value
+            };
+
             const btn = document.getElementById('submit-btn');
             const msg = document.getElementById('response-msg');
 
@@ -135,11 +153,11 @@
                 const response = await fetch('/api/send-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
+                    body: JSON.stringify(formData)
                 });
 
                 if (response.ok) {
-                    msg.innerText = "Access Requested. We will contact you shortly.";
+                    msg.innerText = "Application Received. We will verify your firm's website and contact you shortly.";
                     msg.className = "mt-4 font-bold text-green-600";
                     msg.classList.remove('hidden');
                     btn.innerText = "REQUEST SENT";
