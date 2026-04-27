@@ -12,133 +12,40 @@
         .bg-smrg-navy { background-color: #0A192F; }
         .text-smrg-navy { color: #0A192F; }
         .text-smrg-gold { color: #C5A059; }
-        .border-smrg-gold { border-color: #C5A059; }
-        .btn-gold { 
-            background-color: #C5A059; 
-            color: #0A192F; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 6px -1px rgba(197, 160, 89, 0.2);
-        }
-        .btn-gold:hover { 
-            background-color: #AD8B45; 
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(197, 160, 89, 0.3);
-        }
-        .dashboard-container {
-            background-color: #1a1c23;
-            width: 100%;
-            height: auto;
-            display: block;
-            overflow: visible;
-        }
-        .proof-container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
+        .btn-gold { background-color: #C5A059; color: #0A192F; transition: all 0.3s ease; }
+        .btn-gold:hover { background-color: #AD8B45; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(197, 160, 89, 0.3); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
-
     <nav class="py-6 px-8 flex justify-between items-center bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="text-2xl font-bold tracking-tighter text-smrg-navy">SMRG<span class="text-smrg-gold">CONSULTING</span></div>
-        <div>
-            <a href="#pilot" class="btn-gold px-6 py-2 rounded-sm font-semibold text-sm uppercase tracking-widest">Start Pilot</a>
-        </div>
+        <a href="#pilot" class="btn-gold px-6 py-2 rounded-sm font-semibold text-sm uppercase tracking-widest">Start Pilot</a>
     </nav>
 
-    <section class="py-20 px-6 bg-smrg-navy text-white text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl mb-6 leading-tight">Every Lead Becomes a Structured Case—Or Gets Filtered Out.</h1>
-            <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-                <span class="text-smrg-gold font-bold uppercase tracking-widest">Liru</span> (Legal Intake Readiness Utility) runs a structured legal interview for every lead, enforces completeness, and delivers a clean report your attorneys can review immediately.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="#pilot" class="btn-gold px-8 py-4 rounded-sm font-bold text-lg">See Your Leads Reimagined</a>
-                <a href="#pilot" class="border border-white/30 hover:bg-white/10 px-8 py-4 rounded-sm font-bold text-lg transition">Get a Sample Case Report</a>
-            </div>
-            <p class="mt-8 text-sm text-slate-400 uppercase tracking-widest">Built for Intake-Heavy Practices • No Setup Headaches • Works With Your Current Workflow</p>
-        </div>
-    </section>
-
-    <section class="py-16 px-6 -mt-12 relative z-10">
-        <div class="max-w-4xl mx-auto proof-container border-t-8 border-smrg-gold">
-            <div class="p-6 bg-white border-b border-slate-100 flex justify-between items-center text-xs font-bold uppercase tracking-widest text-slate-500">
-                <span>System Output: Case Readiness Report</span>
-                <span class="bg-green-100 text-green-700 px-2 py-1 rounded font-bold uppercase tracking-widest">Ready for Review</span>
-            </div>
-            <div class="dashboard-container p-4 md:p-6 text-center">
-                <img src="dashboard-preview.png" alt="LIRU Dashboard" class="w-full h-auto rounded border border-slate-700 shadow-2xl inline-block">
-            </div>
-            <div class="p-6 bg-slate-50 text-center border-t border-slate-200 italic text-sm text-slate-500 font-mono underline decoration-smrg-gold decoration-2">
-                "This is exactly what your next lead will look like."
-            </div>
-        </div>
-    </section>
-
-    <section class="py-20 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        <div>
-            <h2 class="text-3xl mb-6 text-smrg-navy leading-tight">You’re Not Losing Leads—You’re Losing Usable Cases.</h2>
-            <ul class="space-y-4 text-slate-600 text-lg">
-                <li class="flex items-start"><span class="text-red-500 mr-3 font-bold text-xl">✕</span> Incomplete forms waste attorney review time.</li>
-                <li class="flex items-start"><span class="text-red-500 mr-3 font-bold text-xl">✕</span> Staff intake is inconsistent and varies by mood.</li>
-                <li class="flex items-start"><span class="text-red-500 mr-3 font-bold text-xl">✕</span> <strong>Result:</strong> Wasted ad spend and missed opportunities.</li>
-            </ul>
-        </div>
-        <div class="bg-smrg-navy p-10 text-white rounded shadow-xl">
-            <h3 class="text-smrg-gold text-xl mb-4 font-bold uppercase">A Control System, Not a Chatbot.</h3>
-            <p class="text-slate-300 leading-relaxed">LIRU enforces complete, legally relevant details before a lead ever hits your desk. We position your firm as an efficient, data-driven machine.</p>
-        </div>
-    </section>
-
-    <section id="pilot" class="py-24 px-6 text-center bg-white border-t border-slate-200">
+    <section id="pilot" class="py-24 px-6 text-center bg-white">
         <div class="max-w-3xl mx-auto border-2 border-slate-200 p-12 rounded-lg bg-slate-50/50">
             <h2 class="text-3xl mb-6 text-smrg-navy font-serif italic font-bold">Start a 10-Lead Pilot</h2>
-            <p class="text-slate-600 mb-10 text-lg leading-relaxed">Run Liru on your next 10 leads. If the output isn't more structured than your current process, don't continue.</p>
+            <p class="text-slate-600 mb-10 text-lg">Run Liru on your next 10 leads.</p>
             
             <form id="pilot-form" class="flex flex-col gap-4 max-w-md mx-auto">
-                <input type="text" id="lead-name" placeholder="Full Name / Firm Admin" required
-                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
-                
-                <input type="email" id="lead-email" placeholder="Firm Email Address" required
-                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
-                
+                <input type="text" id="lead-name" placeholder="Full Name" required class="p-4 rounded-sm border border-slate-300 outline-none">
+                <input type="email" id="lead-email" placeholder="Firm Email" required class="p-4 rounded-sm border border-slate-300 outline-none">
                 <div class="text-left">
-                    <label for="lead-website" class="text-[10px] text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Firm Website (Must start with https://)</label>
-                    <input type="url" id="lead-website" placeholder="https://smrgconsulting.com" required
-                        class="w-full p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
+                    <label class="text-[10px] text-slate-400 uppercase tracking-widest block mb-1">Firm Website (Must start with https://)</label>
+                    <input type="url" id="lead-website" placeholder="https://smrgconsulting.com" required class="w-full p-4 rounded-sm border border-slate-300 outline-none">
                 </div>
-
-                <input type="tel" id="lead-phone" placeholder="Contact Phone Number" required
-                    class="p-4 rounded-sm border border-slate-300 text-slate-900 outline-none focus:ring-2 focus:ring-smrg-gold">
-
-                <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest mt-2">
-                    Request Pilot Access
-                </button>
+                <input type="tel" id="lead-phone" placeholder="Phone Number" required class="p-4 rounded-sm border border-slate-300 outline-none">
+                <button type="submit" id="submit-btn" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl uppercase tracking-widest">Request Pilot Access</button>
             </form>
             <p id="response-msg" class="mt-4 font-bold hidden"></p>
         </div>
     </section>
 
-    <footer class="py-24 bg-smrg-navy text-white text-center">
-        <div class="max-w-2xl mx-auto px-6">
-            <h2 class="text-3xl md:text-5xl mb-8 leading-tight font-serif italic text-white">Stop reviewing incomplete notes. Start reviewing structured cases.</h2>
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <a href="#pilot" class="btn-gold px-12 py-5 rounded-sm font-bold text-xl w-full md:w-auto uppercase tracking-widest">Book a 10-Minute Demo</a>
-                <a href="#pilot" class="text-smrg-gold underline tracking-widest uppercase text-sm font-bold hover:text-white transition">Get a Sample Report</a>
-            </div>
-            <p class="mt-24 text-[10px] text-slate-500 uppercase tracking-[0.4em] font-bold">© 2026 SMRG CONSULTING • LIRU: LEGAL INTAKE READINESS UTILITY</p>
-        </div>
-    </footer>
-
     <script>
-        // Auto-fix URL format if user forgets https://
+        // Auto-fix URL format
         document.getElementById('lead-website').addEventListener('blur', function(e) {
             let url = e.target.value.trim();
-            if (url && !/^https?:\/\//i.test(url)) {
-                e.target.value = 'https://' + url;
-            }
+            if (url && !/^https?:\/\//i.test(url)) { e.target.value = 'https://' + url; }
         });
 
         document.getElementById('pilot-form').addEventListener('submit', async (e) => {
@@ -149,11 +56,9 @@
                 website: document.getElementById('lead-website').value,
                 phone: document.getElementById('lead-phone').value
             };
-
             const btn = document.getElementById('submit-btn');
             const msg = document.getElementById('response-msg');
             btn.disabled = true; btn.innerText = 'PROCESSING...';
-
             try {
                 const response = await fetch('/api/send-lead', {
                     method: 'POST',
@@ -161,13 +66,13 @@
                     body: JSON.stringify(formData)
                 });
                 if (response.ok) {
-                    msg.innerText = "Application Received. We will verify your firm's website and contact you shortly.";
+                    msg.innerText = "Application Received.";
                     msg.className = "mt-4 font-bold text-green-600";
                     msg.classList.remove('hidden');
                     btn.innerText = "REQUEST SENT";
                 } else { throw new Error(); }
             } catch (error) {
-                msg.innerText = "System Error. Please email info@smrgconsulting.com";
+                msg.innerText = "System Error. Email support@smrgconsulting.com";
                 msg.className = "mt-4 font-bold text-red-600";
                 msg.classList.remove('hidden');
                 btn.disabled = false; btn.innerText = "TRY AGAIN";
